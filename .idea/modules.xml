@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DecisionClient/DecisionClient.iml" filepath="$PROJECT_DIR$/DecisionClient/DecisionClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DecisionModel/DecisionModel.iml" filepath="$PROJECT_DIR$/DecisionModel/DecisionModel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GroovyDryRun.iml" filepath="$PROJECT_DIR$/GroovyDryRun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GroovyRuleEngine/GroovyRuleEngine.iml" filepath="$PROJECT_DIR$/GroovyRuleEngine/GroovyRuleEngine.iml" />
+    </modules>
+  </component>
+</project>

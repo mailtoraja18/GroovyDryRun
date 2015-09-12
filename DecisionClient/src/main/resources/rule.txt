@@ -1,0 +1,18 @@
+class ClosureHolder {
+  def closures = [{
+      rule {
+            when{
+                ( 1 + 1 == 3 ) || (1 + 1 == 2)
+            } then {
+                println("1 + 1 == 2")
+            }
+      }
+  }]
+
+   def rule(Closure cl) {
+        def engine = new com.mycompany.engine.Rule()
+        def code = cl.rehydrate(engine, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+   }
+}
