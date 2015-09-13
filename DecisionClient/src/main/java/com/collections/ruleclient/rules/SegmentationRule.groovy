@@ -1,4 +1,4 @@
-package com.collections.ruleclient
+package com.collections.ruleclient.rules
 
 import com.collections.model.Account
 
@@ -12,10 +12,12 @@ import static com.mycompany.engine.RuleFlowEngine.*
 
 
 rule "Segmentation", { Customer customer ->
+    set a:10
     when {
-        true
+        customer.balance > 0
     }
     then {
+        println a
         if (customer.balance > 0 && customer.balance < 4000) {
             customer.segmentation = 'HYLB'
         } else if (customer.balance > 4000 && customer.balance < 6000) {

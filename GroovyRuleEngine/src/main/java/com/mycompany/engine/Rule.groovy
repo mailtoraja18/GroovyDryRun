@@ -1,5 +1,6 @@
 package com.mycompany.engine
 
+import com.collections.model.Customer
 import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.FirstParam
 import groovy.transform.stc.SimpleType
@@ -12,17 +13,14 @@ class Rule {
 
     def result = false
     def context = [:]
-    def Map<Object,Class>  parameters ;
+    def Map<Class,Object>  parameters ;
 
-    public Rule(Map<Object,Class> parameters) {
+    public Rule(Map<Class,Object> parameters) {
         this.parameters = parameters
     }
 
     def when(Closure expression) {
-        def binding = new Binding()
-        context.each {
-            key, value -> binding.setVariable(key, value)
-        }
+        Binding binding = getBinding()
         expression.delegate = binding
         if (expression()) {
             result = true;
@@ -32,12 +30,11 @@ class Rule {
         this
     }
 
+
+
     def then(Closure expression) {
         if (result) {
-            def binding = new Binding()
-            context.each {
-                key, value -> binding.setVariable(key, value)
-            }
+            def binding = getBinding()
             expression.delegate = binding
             expression()
             context.each {
@@ -62,7 +59,20 @@ class Rule {
         }
     }
 
+    private Binding getBinding() {
+        def binding = new Binding()
+        parameters.each {
+           // key,value -> binding.setProperty("customer",value);
+        }
+        context.each {
+            key, value -> binding.setVariable(key, value)
+        }
+        binding
+    }
+
     def printContext() {
         println context
     }
+
+
 }

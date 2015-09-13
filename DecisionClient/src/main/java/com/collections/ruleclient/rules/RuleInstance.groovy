@@ -1,4 +1,4 @@
-package com.collections.ruleclient
+package com.collections.ruleclient.rules
 
 import com.collections.model.Account
 

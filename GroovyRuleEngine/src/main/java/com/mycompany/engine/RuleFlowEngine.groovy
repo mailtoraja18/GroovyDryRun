@@ -1,5 +1,6 @@
 package com.mycompany.engine
 
+import com.collections.model.Customer
 import com.mycompany.engine.Flow
 import com.mycompany.engine.Rule
 
@@ -8,14 +9,17 @@ import com.mycompany.engine.Rule
  */
 class RuleFlowEngine {
 
-    private static Map<Object,Class> parameters = new HashMap<Object, Class>();
+    private static Map<Class,Object> parameters = new HashMap<Class, Object>();
+
+    private static Map<String,Class> rules = new HashMap<String, Class>();
+
 
     static def rule(name , @DelegatesTo(Rule) Closure cl) {
         println "executing RULE " + name
         Rule engine = new Rule(parameters)
         def code = cl.rehydrate(engine, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
+        code(parameters.get(Customer.class))
         engine.printContext()
     }
 
@@ -24,11 +28,20 @@ class RuleFlowEngine {
         Flow engine = new Flow(parameters)
         def code = cl.rehydrate(engine, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
+        code(parameters.get(Customer.class))
     }
 
-    static def initialize(Object object,Class clazz) {
-         parameters.put(object,clazz);
+    static def initializeParameters(Class clazz,Object object) {
+         parameters.put(clazz,object);
     }
 
+    public static executeRule(name) {
+        Class scriptClass = rules.get(name)
+        Script scriptInstance = scriptClass.newInstance()
+        scriptInstance.run()
+    }
+
+    static def addRule(name,scriptClass) {
+        rules.put(name,scriptClass)
+    }
 }
