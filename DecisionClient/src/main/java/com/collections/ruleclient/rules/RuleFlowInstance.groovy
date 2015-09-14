@@ -8,25 +8,9 @@ import com.collections.model.Customer
 
 import static com.mycompany.engine.RuleFlowEngine.*
 
-flow "flowname" , { Customer customer ->
-  step name:"step1", {
-      println("step1")
-  }
-  step name:"step2", {
-      println("step2")
-  }
-  step name:"step3", {
-      println("step3")
-  }
-  step name:"step4", {
-      println("step4");
-  }
+flow "PrimaryFlow" , { Customer customer ->
 
-  after step:"start",execute:"step1"
-  after step:"step1","customer.balance > 200":"step2","customer.balance <= 200":"step3",else:"step4"
-  after step:"step2",execute:"end"
-  after step:"step3",execute:"end"
-
-  runFlow()
-
+    execute SegmentationRule
+    when customer.balance > 200 execute ChannelRule
+    when customer.balance <=200 executeExpr { customer.channel = 'ABC' }
  }

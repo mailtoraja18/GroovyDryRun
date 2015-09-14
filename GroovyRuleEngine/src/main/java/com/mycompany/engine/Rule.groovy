@@ -61,9 +61,6 @@ class Rule {
 
     private Binding getBinding() {
         def binding = new Binding()
-        parameters.each {
-           // key,value -> binding.setProperty("customer",value);
-        }
         context.each {
             key, value -> binding.setVariable(key, value)
         }
@@ -73,6 +70,5 @@ class Rule {
     def printContext() {
         println context
     }
-
 
 }

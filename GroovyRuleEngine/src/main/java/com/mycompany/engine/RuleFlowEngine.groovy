@@ -13,6 +13,7 @@ class RuleFlowEngine {
 
     private static Map<String,Class> rules = new HashMap<String, Class>();
 
+    private static Map<String,Class> flow = new HashMap<String, Class>();
 
     static def rule(name , @DelegatesTo(Rule) Closure cl) {
         println "executing RULE " + name
@@ -41,7 +42,22 @@ class RuleFlowEngine {
         scriptInstance.run()
     }
 
+    public static executeRuleClazz(name) {
+        Script scriptInstance = name.newInstance()
+        scriptInstance.run()
+    }
+
+    public static executeFlow(name) {
+        Class scriptClass = flow.get(name)
+        Script scriptInstance = scriptClass.newInstance()
+        scriptInstance.run()
+    }
+
     static def addRule(name,scriptClass) {
         rules.put(name,scriptClass)
+    }
+
+    static def addFlow(name,scriptClass) {
+        flow.put(name,scriptClass)
     }
 }
